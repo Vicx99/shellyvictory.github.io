@@ -1,0 +1,14 @@
+.jumbotron {
+  padding-top: 6rem;
+  background-color: #16213e;
+}
+
+#projects {
+  background-color: #16213e;
+}
+section {
+  padding-top: 5rem;
+}
+.card-body {
+  background-color: #f1ebbb;
+}
