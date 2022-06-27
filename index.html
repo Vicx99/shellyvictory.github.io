@@ -47,7 +47,8 @@
     <section class="jumbotron text-center text-white">
       <img class="rounded-circle img-thumbnail" id="fotoProfil" src="img/lidya-nada-_0aKQa9gr4s-unsplash.jpg" alt="Shelly Victory(will change later)" width="200" />
       <h1 class="display-4">Hi, I'm Shelly Victory!</h1>
-      <p class="lead">One of Best Graduate of Wisuda Universitas Bangka Belitung XXIX | Highly interested in Machine Learning and Data Science.</p>
+      <p class="lead">Data Science Student of Digital Talent Scholarship FGA 2022 | One of Best Graduate of Wisuda Universitas Bangka Belitung XXIX |</p>
+      <p class="lead">Highly interested in Machine Learning and Data Science</p>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path
           fill="#E94560"
@@ -67,10 +68,16 @@
         </div>
         <div class="row justify-content-center fs-5 text-start" style="color: aliceblue">
           <div class="col-md-4">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum nam temporibus modi esse quae iure? Facilis minus similique rem laudantium.</p>
+            <p>
+              A freshgraduate with eager will to learn about machine learning and data science. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum nam temporibus modi esse quae iure?
+              Facilis minus similique rem laudantium.
+            </p>
           </div>
           <div class="col-md-4">
-            <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus non, saepe accusantium quis sequi quo deserunt. Ullam laboriosam voluptates nihil?</p>
+            <p>
+              Find more about me here. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus non, saepe accusantium quis sequi quo deserunt. Ullam laboriosam
+              voluptates nihil?
+            </p>
           </div>
         </div>
       </div>
@@ -168,20 +175,28 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-md-8 text-white">
-              <form>
+              <div class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+                <strong>Your message received!</strong> Thank You.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <form name="submit-to-google-sheet">
                 <div class="mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" aria-describedby="name" />
+                  <input type="text" class="form-control" id="name" aria-describedby="name" name="name" />
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" />
                 </div>
                 <div class="mb-3">
                   <label for="message" class="form-label">Message</label>
-                  <textarea class="form-control" id="message" rows="3"></textarea>
+                  <textarea class="form-control" id="message" rows="3" name="message"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary btn-send">Send</button>
+                <button class="btn btn-danger d-none btn-loading" type="button" disabled>
+                  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                  Your message is on the way :)...
+                </button>
               </form>
             </div>
           </div>
@@ -209,5 +224,33 @@
       crossorigin="anonymous"
       ;
     ></script>
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbxqv8kwj-34awEmK-LxUrSv_O4qbxojJmnxTlw52lUdTI3-uziEJ0A3hG7mYRksi7VKYg/exec";
+      const form = document.forms["submit-to-google-sheet"];
+      const btnSend = document.querySelector(".btn-send");
+      const btnLoading = document.querySelector(".btn-loading");
+      const alert = document.querySelector(".alert");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // when clicking submit btn
+        // show loading btn, dismiss send btn
+        btnLoading.classList.toggle("d-none");
+        btnSend.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            // when loading btn showed
+            // show send btn, dismiss loading btn
+            btnLoading.classList.toggle("d-none");
+            btnSend.classList.toggle("d-none");
+            // show alert
+            alert.classList.toggle("d-none");
+            // reset form
+            form.reset();
+            console.log("Success!", response);
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
   </body>
 </html>
